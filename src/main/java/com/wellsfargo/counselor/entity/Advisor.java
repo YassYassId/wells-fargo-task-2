@@ -91,14 +91,4 @@ public class Advisor {
     public List<Client> getClients() {
         return clients;
     }
-
-    public void addClient(Client client) {
-        clients.add(client);
-        client.setAdvisor(this);
-    }
-
-    public void removeClient(Client client) {
-        clients.remove(client);
-        client.setAdvisor(null);
-    }
 }

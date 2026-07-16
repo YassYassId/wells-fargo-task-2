@@ -54,14 +54,4 @@ public class Portfolio {
     public List<Security> getSecurities() {
         return securities;
     }
-
-    public void addSecurity(Security security) {
-        securities.add(security);
-        security.setPortfolio(this);
-    }
-
-    public void removeSecurity(Security security) {
-        securities.remove(security);
-        security.setPortfolio(null);
-    }
 }
