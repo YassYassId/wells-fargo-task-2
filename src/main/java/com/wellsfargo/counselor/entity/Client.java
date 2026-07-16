@@ -1,17 +1,17 @@
 package com.wellsfargo.counselor.entity;
 
-
 import jakarta.persistence.*;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Entity
-public class Advisor {
+public class Client {
 
     @Id
-    @GeneratedValue()
-    private long advisorId;
+    @GeneratedValue
+    private long clientId;
+
+    @ManyToOne
+    @JoinColumn(name = "advisorId", nullable = false)
+    private Advisor advisor;
 
     @Column(nullable = false)
     private String firstName;
@@ -28,15 +28,15 @@ public class Advisor {
     @Column(nullable = false)
     private String email;
 
-    @OneToMany(mappedBy = "advisor")
-    private List<Client> clients = new ArrayList<>();
+    @OneToOne(mappedBy = "client")
+    private Portfolio portfolio;
 
-
-    protected Advisor() {
+    protected Client() {
 
     }
 
-    public Advisor(String firstName, String lastName, String address, String phone, String email) {
+    public Client(Advisor advisor, String firstName, String lastName, String address, String phone, String email) {
+        this.advisor = advisor;
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
@@ -44,8 +44,16 @@ public class Advisor {
         this.email = email;
     }
 
-    public Long getAdvisorId() {
-        return advisorId;
+    public Long getClientId() {
+        return clientId;
+    }
+
+    public Advisor getAdvisor() {
+        return advisor;
+    }
+
+    public void setAdvisor(Advisor advisor) {
+        this.advisor = advisor;
     }
 
     public String getFirstName() {
@@ -88,17 +96,11 @@ public class Advisor {
         this.email = email;
     }
 
-    public List<Client> getClients() {
-        return clients;
+    public Portfolio getPortfolio() {
+        return portfolio;
     }
 
-    public void addClient(Client client) {
-        clients.add(client);
-        client.setAdvisor(this);
-    }
-
-    public void removeClient(Client client) {
-        clients.remove(client);
-        client.setAdvisor(null);
+    public void setPortfolio(Portfolio portfolio) {
+        this.portfolio = portfolio;
     }
 }
